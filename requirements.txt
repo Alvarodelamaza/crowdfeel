@@ -9,6 +9,8 @@ numpy
 pandas
 scikit-learn
 transformers
+nltk
+tensorflow
 
 # tests/linter
 black

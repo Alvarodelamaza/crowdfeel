@@ -31,6 +31,6 @@ for tweet in public_tweets:
 
 df = pd.DataFrame(data, columns=columns)
 
-# df.to_csv('tweets.csv')
+df.to_csv('tweets.csv')
 
 print(df)
