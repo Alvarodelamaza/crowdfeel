@@ -1,4 +1,3 @@
-from itertools import count
 import tweepy
 import configparser
 import pandas as pd
@@ -52,6 +51,8 @@ def geo_query(distance,location):
 
     df.to_csv('tweets_geoloc_1k.csv')
 
+    print('✅saved to csv: tweets_geoloc_1k.csv')
+
     return df
 
 
@@ -73,6 +74,8 @@ def hashtag_query(hashtag):
 
     df.to_csv('tweets_hashtags_1k.csv')
 
+    print('✅saved to csv: tweets_hashtags_1k.csv')
+
     return df
 
 def combo_query(free_text, hashtag, account):
@@ -82,7 +85,6 @@ def combo_query(free_text, hashtag, account):
 
     # combo = "tesla AND #crypto AND @elonmusk -filter:retweets"
     combo = f"{free_text} AND #{hashtag} AND @{account} -filter:retweets"
-    print(combo)
     tweets = list(tweepy.Cursor(api.search_tweets, q=combo, lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
@@ -95,6 +97,8 @@ def combo_query(free_text, hashtag, account):
 
     df.to_csv('tweets_combo_1k.csv')
 
+    print('✅saved to csv: tweets_combo_1k.csv')
+
     return df
 
 
@@ -102,6 +106,3 @@ def combo_query(free_text, hashtag, account):
 # geo_query(10,'amsterdam')
 # hashtag_query('amsterdam')
 # combo_query('tesla','crypto','elonmusk')
-
-
-#for a location, return top 3 hashtags
