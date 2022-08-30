@@ -36,12 +36,8 @@ def geo_query(lat, lon, radius):
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
-<<<<<<< HEAD
-df.to_csv('tweets.csv')
-=======
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
->>>>>>> dad17f4978624af2179e68c370c4c8bd85606ad2
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -62,7 +58,7 @@ def hashtag_query(hashtag):
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -82,7 +78,7 @@ def combo_query(free_text, hashtag, account, *arg):
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -91,6 +87,6 @@ def combo_query(free_text, hashtag, account, *arg):
     return df
 
 # Uncomment these queries in order to run
-geo_query(52.374649000000005, 4.898072467936939, 10)
-hashtag_query('amsterdam')
-combo_query('tesla','crypto','elonmusk')
+# geo_query(52.374649000000005, 4.898072467936939, 10)
+# hashtag_query('amsterdam')
+# combo_query('tesla','crypto','elonmusk')
