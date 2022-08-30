@@ -88,5 +88,5 @@ def combo_query(free_text, hashtag, account):
 
 # Uncomment these queries in order to run
 # geo_query(52.374649000000005, 4.898072467936939, 10)
-hashtag_query('amsterdam')
+# hashtag_query('amsterdam')
 # combo_query('tesla','crypto','elonmusk')
