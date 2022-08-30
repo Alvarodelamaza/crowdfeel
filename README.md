@@ -77,32 +77,4 @@ crowdfeel-run
 check current setup: gcloud info
 initiate new gcloud project: gcloud init
 check bucket: gsutil ls
-download csv (go to raw_data folder and run the following):
-gsutil -m cp \
-  "gs://crowdfeel_bucket/X_test_1600k.csv" \
-  "gs://crowdfeel_bucket/X_test_160k.csv" \
-  "gs://crowdfeel_bucket/X_test_16k.csv" \
-  "gs://crowdfeel_bucket/X_test_400k.csv" \
-  "gs://crowdfeel_bucket/X_test_48k.csv" \
-  "gs://crowdfeel_bucket/X_test_800k.csv" \
-  "gs://crowdfeel_bucket/X_train_1600k.csv" \
-  "gs://crowdfeel_bucket/X_train_160k.csv" \
-  "gs://crowdfeel_bucket/X_train_16k.csv" \
-  "gs://crowdfeel_bucket/X_train_400k.csv" \
-  "gs://crowdfeel_bucket/X_train_48k.csv" \
-  "gs://crowdfeel_bucket/X_train_800k.csv" \
-  "gs://crowdfeel_bucket/training_data.csv" \
-  "gs://crowdfeel_bucket/y_test_1600k.csv" \
-  "gs://crowdfeel_bucket/y_test_160k.csv" \
-  "gs://crowdfeel_bucket/y_test_16k.csv" \
-  "gs://crowdfeel_bucket/y_test_400k.csv" \
-  "gs://crowdfeel_bucket/y_test_48k.csv" \
-  "gs://crowdfeel_bucket/y_test_800k.csv" \
-  "gs://crowdfeel_bucket/y_train_1600k.csv" \
-  "gs://crowdfeel_bucket/y_train_160k.csv" \
-  "gs://crowdfeel_bucket/y_train_16k.csv" \
-  "gs://crowdfeel_bucket/y_train_400k.csv" \
-  "gs://crowdfeel_bucket/y_train_48k.csv" \
-  "gs://crowdfeel_bucket/y_train_800k.csv" \
-  .
 ```
