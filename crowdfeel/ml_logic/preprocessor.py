@@ -12,9 +12,11 @@ from nltk.stem import WordNetLemmatizer
 def preprocess_tweets(X: pd.DataFrame) -> np.ndarray:
     # We drop every columns from the Twitter query except from the Tweet
     columns = ['Time', 'User', 'Location']
-    X.drop(columns)
+    X=X.drop(columns=columns)
+    print(type(X))
+    print(X.shape)
     def basic_cleaning(sentence, stop_words):
-        sentence = sentence.lower()
+        sentence = sentence[0].lower()
         sentence = ''.join(char for char in sentence if not char.isdigit())
         for punctuation in string.punctuation:
             sentence = sentence.replace(punctuation, '')
@@ -34,5 +36,5 @@ def preprocess_tweets(X: pd.DataFrame) -> np.ndarray:
         stop_words=set(stop_words)
         small_cleaned=[basic_cleaning(tweet, stop_words) for tweet in chunk]
         return small_cleaned
-
+    print('✅ Data preprocessed')
     return chunk_cleaning(X.values.tolist())
