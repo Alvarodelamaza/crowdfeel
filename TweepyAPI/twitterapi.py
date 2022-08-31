@@ -1,7 +1,9 @@
-from itertools import count
 import tweepy
 import configparser
 import pandas as pd
+from geopy.geocoders import Nominatim
+
+
 
 def authenticate():
 # read configs
@@ -25,30 +27,38 @@ def authenticate():
 # tweets = api.search_geo(query='Amsterdam Netherlands')
 # tweets = api.geo_id(place_id='99cdab25eddd6bce')
 
-def geo_query(lat, lon, radius):
+def geo_query(distance,location):
     '''Query to search for the first 1000 tweets with a given latitude and longitude (ex: 52.374649000000005,4.898072467936939,10km) "
     to use tweet_mode="extended", need to change tweet.text to tweet.full_text. '''
-    n = 1000
+    n = 100
     api = authenticate()
 
-    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=f"{lat},{lon},{radius}km", tweet_mode="extended",lang='en').items(n))
+
+    geolocator = Nominatim(user_agent="twitter")
+    loc = geolocator.geocode(f" {location} ")
+    dist=f"{distance}km"
+    geolocation=str(loc.latitude)+","+str(loc.longitude)+","+str(dist)
+
+    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
     df.to_csv('tweets_geoloc_1k.csv')
+
+    print('✅saved to csv: tweets_geoloc_1k.csv')
 
     return df
 
 
 def hashtag_query(hashtag):
     '''Query to search the first 100 tweets for a given hashtag'''
-    n = 1000
+    n = 100
     api = authenticate()
 
     hashtags = f"#{hashtag} -filter:retweets"
@@ -58,36 +68,41 @@ def hashtag_query(hashtag):
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
     df.to_csv('tweets_hashtags_1k.csv')
 
+    print('✅saved to csv: tweets_hashtags_1k.csv')
+
     return df
 
-def combo_query(free_text, hashtag, account, *arg):
+def combo_query(free_text, hashtag, account):
     '''Query to search Tweets based on keyword, hashtags and username?'''
-    n = 1000
+    n = 100
     api = authenticate()
 
-    combo = "{free_text} AND #{hashtag} AND @{account} -filter:retweets"
+    # combo = "tesla AND #crypto AND @elonmusk -filter:retweets"
+    combo = f"{free_text} AND #{hashtag} AND @{account} -filter:retweets"
     tweets = list(tweepy.Cursor(api.search_tweets, q=combo, lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
     df.to_csv('tweets_combo_1k.csv')
 
+    print('✅saved to csv: tweets_combo_1k.csv')
+
     return df
 
+
 # Uncomment these queries in order to run
-# geo_query(52.374649000000005, 4.898072467936939, 10)
+# geo_query(10,'amsterdam')
 # hashtag_query('amsterdam')
 # combo_query('tesla','crypto','elonmusk')
-# done
