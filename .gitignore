@@ -7,4 +7,4 @@ raw_data/
 **/__pycache__/
 .env
 Constants.py
-TweepyAPI/config.ini
+config.ini
