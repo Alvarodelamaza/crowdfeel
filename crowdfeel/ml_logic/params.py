@@ -1,0 +1,1 @@
+LOCAL_REGISTRY_PATH='opath'
