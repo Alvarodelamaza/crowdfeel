@@ -8,7 +8,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-def preprocess_features(X: pd.DataFrame) -> np.ndarray:
+
+def preprocess_tweets(X: pd.DataFrame) -> np.ndarray:
     # We drop every columns from the Twitter query except from the Tweet
     columns = ['Time', 'User', 'Location']
     X.drop(columns)
