@@ -36,3 +36,5 @@ def pred(distance,location: pd.DataFrame = None) -> np.ndarray:
 
 if __name__ == '__main__':
     pred()
+
+#
