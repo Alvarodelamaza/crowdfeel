@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from crowdfeel.interface.main import pred
+from crowdfeel.interface.main import predhashtag
 from crowdfeel.ml_logic.registry import load_model
 import numpy as np
 
@@ -25,3 +26,19 @@ def root():
 def predict(distance,location):
     happy=np.round(np.mean(pred(app.state.model,distance,location)),3)*100
     return {'happiness' : float(happy)}
+
+@app.get("/predicthasacc")
+def predicthastag(hashtag):
+    predictions=predhashtag(app.state.model,hashtag)
+    happy=np.round(np.mean(predictions['emotion']),3)*100
+    print('happy',happy)
+    random_number=np.random.randint(1,len(predictions['tweets']))
+    tweet=predictions['tweets'][random_number]
+    print('tweet',tweet)
+    tweet_label=predictions['emotion'][random_number]
+    print('tweet_label',tweet_label)
+
+    return {'happiness' : float(happy),
+            'tweet':tweet,
+            'label':float(tweet_label)
+            }
