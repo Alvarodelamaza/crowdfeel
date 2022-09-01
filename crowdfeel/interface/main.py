@@ -38,10 +38,10 @@ def pred(model,distance,location) -> np.ndarray:
     print("✅ prediction done: ", y_pred, y_pred.shape)
     return y_pred
 
-def predhashtag(model,hastag) -> dict:
+def predhashtag(model,hashtag) -> dict:
 
     #model = load_model()d
-    X_pred=hashtag_query(str(hastag))
+    X_pred=hashtag_query(str(hashtag))
 
     # preprocess the new data
     # $CODE_BEGIN
@@ -64,12 +64,13 @@ def predhashtag(model,hastag) -> dict:
 
     # $CODE_END
 
-    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     print("✅ prediction done: ", y_pred, y_pred.shape)
-    results={
-        'happiness': y_pred,
-        'Tweets':X_pred
+    print('Type',type(X_pred['Tweet']))
+    print('shape',X_pred['Tweet'].shape)
 
+    results={
+        'emotion': y_pred,
+        'tweets':np.array(X_pred['Tweet'])
     }
     return results
 

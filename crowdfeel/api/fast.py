@@ -30,11 +30,15 @@ def predict(distance,location):
 @app.get("/predicthasacc")
 def predicthastag(hashtag):
     predictions=predhashtag(app.state.model,hashtag)
-    happy=np.round(np.mean(predictions['happiness']),3)*100
+    happy=np.round(np.mean(predictions['emotion']),3)*100
+    print('happy',happy)
     random_number=np.random.randint(1,len(predictions['tweets']))
     tweet=predictions['tweets'][random_number]
-    tweet_label=predictions['happiness'][random_number]
+    print('tweet',tweet)
+    tweet_label=predictions['emotion'][random_number]
+    print('tweet_label',tweet_label)
 
     return {'happiness' : float(happy),
             'tweet':tweet,
-            'label':tweet_label}
+            'label':float(tweet_label)
+            }
