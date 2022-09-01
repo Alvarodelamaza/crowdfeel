@@ -8,9 +8,9 @@ import pandas as pd
 from transformers import BertTokenizer
 
 
-def pred(distance,location: pd.DataFrame = None) -> np.ndarray:
+def pred(model,distance,location) -> np.ndarray:
 
-    model = load_model()
+    #model = load_model()
     X_pred=geo_query(int(distance),str(location))
 
     # preprocess the new data
@@ -24,9 +24,12 @@ def pred(distance,location: pd.DataFrame = None) -> np.ndarray:
     print('✅Tokenizer loaded')
     tf_batch = tokenizer(X_processed, max_length=128, padding=True, truncation=True, return_tensors='tf')
     print('✅batch loaded')
-    tf_outputs = model(tf_batch)
+    print('batch type',type(tf_batch))
+
+    print('model type',type(model))
+    tf_outputs = model.serving(tf_batch)
     print('✅ model predict')
-    tf_predictions = tf.nn.softmax(tf_outputs[0], axis=-1)
+    tf_predictions = tf.nn.softmax(tf_outputs['logits'], axis=-1)
     print('✅ softmax')
     label = tf.argmax(tf_predictions, axis=1)
     print('✅ argmax')
