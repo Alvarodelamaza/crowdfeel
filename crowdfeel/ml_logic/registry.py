@@ -4,9 +4,9 @@ import pickle
 def load_model():
     from google.cloud import storage
 
-    BUCKET_NAME = "crodwfeel_data"
+    BUCKET_NAME = "crowdfeel_data"
 
-    storage_filename = "model/baseline.pickle"
+    storage_filename = "models/baseline.pickle"
     local_filename = "baseline.pickle"
 
     client = storage.Client()
