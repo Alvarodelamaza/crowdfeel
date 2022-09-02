@@ -10,3 +10,4 @@ Constants.py
 config.ini
 baseline.pickle
 credentials.json
+.env.yaml
