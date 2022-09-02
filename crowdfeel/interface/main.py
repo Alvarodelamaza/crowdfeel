@@ -20,6 +20,8 @@ def pred(model,distance,location) -> np.ndarray:
 
     # make a prediction
     # $CODE_BEGIN
+    # RobertaTokenizer
+    # 
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     print('✅Tokenizer loaded')
     tf_batch = tokenizer(X_processed, max_length=128, padding=True, truncation=True, return_tensors='tf')
