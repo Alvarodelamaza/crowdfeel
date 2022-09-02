@@ -8,3 +8,4 @@ raw_data/
 .env
 Constants.py
 config.ini
+baseline.pickle

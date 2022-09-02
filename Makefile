@@ -53,3 +53,10 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+reinstall_package:
+	@pip uninstall -y crowdfeel || :
+	@pip install -e .
+
+run_api:
+	uvicorn crowdfeel.api.fast:app --reload

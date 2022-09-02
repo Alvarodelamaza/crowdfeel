@@ -11,7 +11,7 @@ from transformers import BertTokenizer
 def pred(distance,location: pd.DataFrame = None) -> np.ndarray:
 
     model = load_model()
-    X_pred=geo_query(distance,location)
+    X_pred=geo_query(int(distance),str(location))
 
     # preprocess the new data
     # $CODE_BEGIN
@@ -21,11 +21,15 @@ def pred(distance,location: pd.DataFrame = None) -> np.ndarray:
     # make a prediction
     # $CODE_BEGIN
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    print('✅Tokenizer loaded')
     tf_batch = tokenizer(X_processed, max_length=128, padding=True, truncation=True, return_tensors='tf')
+    print('✅batch loaded')
     tf_outputs = model(tf_batch)
+    print('✅ model predict')
     tf_predictions = tf.nn.softmax(tf_outputs[0], axis=-1)
-    labels = ['Negative','Positive']
+    print('✅ softmax')
     label = tf.argmax(tf_predictions, axis=1)
+    print('✅ argmax')
     y_pred = label.numpy()
 
     # $CODE_END
