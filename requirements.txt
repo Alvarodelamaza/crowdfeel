@@ -11,6 +11,7 @@ scikit-learn
 transformers
 nltk
 tensorflow
+seaborn
 
 # tests/linter
 black
