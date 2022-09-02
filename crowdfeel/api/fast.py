@@ -37,6 +37,7 @@ def predicthastag(hashtag):
     print('tweet',tweet)
     tweet_label=predictions['emotion'][random_number]
     print('tweet_label',tweet_label)
+    print('done')
 
     return {'happiness' : float(happy),
             'tweet':tweet,
