@@ -2,7 +2,7 @@
 from tensorflow.keras import  models
 import pickle
 
-from crowdfeel.ml_logic.params import CREDENTIAL
+#from crowdfeel.ml_logic.params import CREDENTIAL
 def load_model():
     # from google.cloud import storage
 
@@ -11,9 +11,10 @@ def load_model():
     # storage_filename = "models/baseline.pickle"
     # local_filename = "baseline.pickle"
 
-    client = storage.Client(credentials=CREDENTIAL)
-    bucket = client.bucket(BUCKET_NAME)
-    blob = bucket.blob(storage_filename)
+    # client = storage.Client(credentials=CREDENTIAL)
+    # bucket = client.bucket(BUCKET_NAME)
+    # blob = bucket.blob(storage_filename)
+
     """
     load the latest saved model, return None if no model found
     """
