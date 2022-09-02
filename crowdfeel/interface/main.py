@@ -36,7 +36,11 @@ def pred(model,distance,location) -> np.ndarray:
 
     # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     print("✅ prediction done: ", y_pred, y_pred.shape)
-    return y_pred
+    results={
+        'emotion': y_pred,
+        'tweets':np.array(X_pred['Tweet'])
+    }
+    return results
 
 def predhashtag(model,hashtag) -> dict:
 

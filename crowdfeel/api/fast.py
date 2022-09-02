@@ -24,22 +24,39 @@ def root():
 }
 @app.get("/predictbeta")
 def predict(distance,location):
-    happy=np.round(np.mean(pred(app.state.model,distance,location)),3)*100
-    return {'happiness' : float(happy)}
+    predictions=pred(app.state.model,distance,location)
+    happy=np.round(np.mean(predictions['emotion']),3)*100
+    print('happy',happy)
+    random_number=np.random.randint(1,len(predictions['tweets']),5)
+    tweets=[]
+    tweet_labels=[]
+    for num in random_number:
+        tweets.append(predictions['tweets'][num])
+        tweet_labels.append(float(predictions['emotion'][num]))
+    print('tweet',tweets)
+    print('tweet_label',tweet_labels)
+
+    return {'happiness' : float(happy), # Float with happiness
+            'tweet':tweets,    # List with 5 tweets
+            'label':tweet_labels # labels of the corresponding 5 tweets
+            }
+
 
 @app.get("/predicthasacc")
 def predicthastag(hashtag):
     predictions=predhashtag(app.state.model,hashtag)
     happy=np.round(np.mean(predictions['emotion']),3)*100
     print('happy',happy)
-    random_number=np.random.randint(1,len(predictions['tweets']))
-    tweet=predictions['tweets'][random_number]
-    print('tweet',tweet)
-    tweet_label=predictions['emotion'][random_number]
-    print('tweet_label',tweet_label)
-    print('done')
+    random_number=np.random.randint(1,len(predictions['tweets']),5)
+    tweets=[]
+    tweet_labels=[]
+    for num in random_number:
+        tweets.append(predictions['tweets'][num])
+        tweet_labels.append(float(predictions['emotion'][num]))
+    print('tweet',tweets)
+    print('tweet_label',tweet_labels)
 
-    return {'happiness' : float(happy),
-            'tweet':tweet,
-            'label':float(tweet_label)
+    return {'happiness' : float(happy), # Float with happiness
+            'tweet':tweets,    # List with 5 tweets
+            'label':tweet_labels # labels of the corresponding 5 tweets
             }
