@@ -33,14 +33,12 @@ def geo_query(distance,location):
     n = 100
     api = authenticate()
 
-
     geolocator = Nominatim(user_agent="twitter")
     loc = geolocator.geocode(f" {location} ")
     dist=f"{distance}km"
     geolocation=str(loc.latitude)+","+str(loc.longitude)+","+str(dist)
 
-    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en').items(n))
-
+    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en', count=10).items(n))
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
@@ -48,10 +46,6 @@ def geo_query(distance,location):
         data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
-
-    df.to_csv('tweets_geoloc_1k.csv')
-
-    print('✅saved to csv: tweets_geoloc_1k.csv')
 
     return df
 
@@ -69,12 +63,7 @@ def hashtag_query(hashtag):
 
     for tweet in tweets:
         data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
-
     df = pd.DataFrame(data, columns=columns)
-
-    df.to_csv('tweets_hashtags_1k.csv')
-
-    print('✅saved to csv: tweets_hashtags_1k.csv')
 
     return df
 
@@ -95,14 +84,4 @@ def combo_query(hashtag, account):
 
     df = pd.DataFrame(data, columns=columns)
 
-    df.to_csv('tweets_combo_1k.csv')
-
-    print('✅saved to csv: tweets_combo_1k.csv')
-
     return df
-
-
-# Uncomment these queries in order to run
-# geo_query(10,'amsterdam')
-# hashtag_query('amsterdam')
-# combo_query('tesla','crypto','elonmusk')

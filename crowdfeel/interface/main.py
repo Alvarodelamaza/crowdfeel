@@ -8,47 +8,40 @@ import pandas as pd
 from transformers import BertTokenizer
 
 
-def pred(model,distance,location) -> np.ndarray:
-
-    #model = load_model()
+def predloc(model,distance,location) -> np.ndarray:
+    '''
+    Extract data from Twitter based on location, and returns dict with tweets, labels and time
+    '''
+    #Extract data from the tweet API filterd by location
     X_pred=geo_query(int(distance),str(location))
 
     # preprocess the new data
-    # $CODE_BEGIN
     X_processed = preprocess_tweets(X_pred)
-    # $CODE_END
 
-    # make a prediction
-    # $CODE_BEGIN
+    # Tokenize the data
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    print('✅Tokenizer loaded')
     tf_batch = tokenizer(X_processed, max_length=128, padding=True, truncation=True, return_tensors='tf')
 
+    #Predict data
     tf_outputs = model.serving(tf_batch)
-    print('✅ model predict')
     tf_predictions = tf.nn.softmax(tf_outputs['logits'], axis=-1)
-
     label = tf.argmax(tf_predictions, axis=1)
-
     y_pred = label.numpy()
-
-    # $CODE_END
-
-    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     print("✅ prediction done: ", y_pred, y_pred.shape)
+
     results={
-        'emotion': y_pred,
-        'tweets':np.array(X_pred['Tweet'])
+        'emotion': y_pred, # Label predicted
+        'tweets':np.array(X_pred['Tweet']), # Tweets where we predict
+        'time':(np.array(X_pred['Time'].dt.day),np.array(X_pred['Time'].dt.month)) # Tuple with day and month of the corresponding tweets
     }
     return results
 
 def predhashtag(model,hashtag) -> dict:
 
-    #model = load_model()d
+    # Extract data from the tweet API filtered by hashtag
     X_pred=hashtag_query(str(hashtag))
 
-    # preprocess the new data
-    # $CODE_BEGIN
+
     X_processed = preprocess_tweets(X_pred)
     # $CODE_END
 
@@ -74,7 +67,9 @@ def predhashtag(model,hashtag) -> dict:
 
     results={
         'emotion': y_pred,
-        'tweets':np.array(X_pred['Tweet'])
+        'tweets':np.array(X_pred['Tweet']),
+        'time':np.array(X_pred['Time']),
+        'time':(np.array(X_pred['Time'].dt.day),np.array(X_pred['Time'].dt.month))
     }
     return results
 
