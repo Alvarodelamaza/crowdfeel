@@ -1,6 +1,8 @@
 
 from tensorflow.keras import  models
 import pickle
+
+from crowdfeel.ml_logic.params import CREDENTIAL
 def load_model():
     from google.cloud import storage
 
@@ -9,7 +11,7 @@ def load_model():
     storage_filename = "models/baseline.pickle"
     local_filename = "baseline.pickle"
 
-    client = storage.Client()
+    client = storage.Client(credentials=CREDENTIAL)
     bucket = client.bucket(BUCKET_NAME)
     blob = bucket.blob(storage_filename)
     blob.download_to_filename(local_filename)

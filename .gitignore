@@ -9,3 +9,4 @@ raw_data/
 Constants.py
 config.ini
 baseline.pickle
+credentials.json
