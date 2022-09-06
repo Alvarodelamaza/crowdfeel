@@ -67,14 +67,13 @@ def hashtag_query(hashtag):
 
     return df
 
-def combo_query(hashtag, account):
-    '''Query to search Tweets based on keyword, hashtags and username?'''
+def handle_query(account):
+    '''Query to search Tweets based on username'''
     n = 100
     api = authenticate()
 
-    # combo = "tesla AND #crypto AND @elonmusk -filter:retweets"
-    combo = f"#{hashtag} AND @{account} -filter:retweets"
-    tweets = list(tweepy.Cursor(api.search_tweets, q=combo, lang='en').items(n))
+    handle = f"from:{account} -filter:retweets"
+    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []

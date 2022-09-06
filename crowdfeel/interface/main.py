@@ -2,6 +2,7 @@
 from crowdfeel.ml_logic.preprocessor import preprocess_tweets
 from crowdfeel.TweepyAPI.twitterapi import geo_query
 from crowdfeel.TweepyAPI.twitterapi import hashtag_query
+from crowdfeel.TweepyAPI.twitterapi import handle_query
 import numpy as np
 import tensorflow as tf
 import pandas as pd
@@ -73,8 +74,34 @@ def predhashtag(model,hashtag) -> dict:
     }
     return results
 
+def predacc(model,account) -> np.ndarray:
+    '''
+    Extract data from Twitter based on an account
+    '''
+    #Extract data from the tweet API filterd by account name
+    X_pred=handle_query(str(account))
+
+    # preprocess the new data
+    X_processed = preprocess_tweets(X_pred)
+
+    # Tokenize the data
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    tf_batch = tokenizer(X_processed, max_length=128, padding=True, truncation=True, return_tensors='tf')
+
+    #Predict data
+    tf_outputs = model.serving(tf_batch)
+    tf_predictions = tf.nn.softmax(tf_outputs['logits'], axis=-1)
+    label = tf.argmax(tf_predictions, axis=1)
+    y_pred = label.numpy()
+    print("✅ prediction done: ", y_pred, y_pred.shape)
+
+    results={
+        'emotion': y_pred, # Label predicted
+        'tweets':np.array(X_pred['Tweet']), # Tweets where we predict
+        'time':(np.array(X_pred['Time'].dt.day),np.array(X_pred['Time'].dt.month)) # Tuple with day and month of the corresponding tweets
+    }
+    return results
+
 if __name__ == '__main__':
     pred()
     predhashtag()
-
-#
