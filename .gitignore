@@ -10,5 +10,6 @@ Constants.py
 config.ini
 baseline.pickle
 emotions_baseline_2_1.pickle
+improved_baseline.pickle
 credentials.json
 .env.yaml
