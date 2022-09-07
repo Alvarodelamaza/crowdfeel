@@ -38,12 +38,12 @@ def geo_query(distance,location):
     dist=f"{distance}km"
     geolocation=str(loc.latitude)+","+str(loc.longitude)+","+str(dist)
 
-    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en', count=10).items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en',tweet_mode='extended' ).items(n))
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -56,13 +56,13 @@ def hashtag_query(hashtag):
     api = authenticate()
 
     hashtags = f"#{hashtag} -filter:retweets"
-    tweets = list(tweepy.Cursor(api.search_tweets, q=hashtags, lang='en').items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q=hashtags, lang='en',tweet_mode='extended').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
     df = pd.DataFrame(data, columns=columns)
 
     return df
@@ -73,13 +73,31 @@ def handle_query(account):
     api = authenticate()
 
     handle = f"from:{account} -filter:retweets"
-    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en').items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en', tweet_mode='extended').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+
+    df = pd.DataFrame(data, columns=columns)
+
+    return df
+
+def mention_query(account):
+    '''Query to search Tweets based on username'''
+    n = 100
+    api = authenticate()
+
+    handle = f"@{account} -filter:retweets"
+    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en',tweet_mode='extended').items(n))
+
+    columns = ['Time', 'User', 'Tweet', 'Location']
+    data = []
+
+    for tweet in tweets:
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
