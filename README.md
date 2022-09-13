@@ -12,6 +12,9 @@ CrowdFeel is web App which allows users to trak in real-time the emotions and se
 💻 Check it out : https://crowd-feel.herokuapp.com/
 
 
+Front-end repository: https://github.com/Alvarodelamaza/crowdfeel-frontend
+
+
 ## Tech Stack
 **ML and AI:** Tensorflow, Vertex AI, Google Bert model
 
