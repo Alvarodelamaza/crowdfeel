@@ -1,10 +1,39 @@
-# Data analysis
-- Document here the project: crowdfeel
-- Description: Project Description
-- Data Source:
-- Type of analysis:
 
-Please document the project the better you can.
+[![Logo3.png](https://i.postimg.cc/4d6RBfZn/Logo3.png)](https://postimg.cc/34xqwHkH)
+
+
+# CrowdFeel
+
+Real-time sentiments and emotions analysis through Twitter
+
+CrowdFeel is web App which allows users to trak in real-time the emotions and sentiments of a certain target tweets. Users can search tweets by username (post by or mentioned), location of the tweets or by hashtag.
+
+
+💻 Check it out : https://crowd-feel.herokuapp.com/
+
+
+## Tech Stack
+**ML and AI:** Tensorflow, Vertex AI, Google Bert model
+
+**Backend:** FastAPI, Docker, Google Cloud Run, Heroku
+
+**Frontend:** Streamlit
+
+
+## Screenshots
+
+[![Screen-Shot-2022-09-13-at-12-12-12.png](https://i.postimg.cc/TPJmrbSs/Screen-Shot-2022-09-13-at-12-12-12.png)](https://postimg.cc/7Cbf45q1)
+
+[![Screen-Shot-2022-09-13-at-12-11-32.png](https://i.postimg.cc/VkB5T8Rr/Screen-Shot-2022-09-13-at-12-11-32.png)](https://postimg.cc/87c1JxxN)
+
+[![Screen-Shot-2022-09-13-at-12-11-43.png](https://i.postimg.cc/Lsx593Gm/Screen-Shot-2022-09-13-at-12-11-43.png)](https://postimg.cc/7CTwX0xR)
+
+
+## Authors
+
+- [Angelo Darriet](https://github.com/AngieDar)
+- [Alvaro de la Maza](https://github.com/Alvarodelamaza)
+- [Tjebbe Lodeizen](https://github.com/tjebbel)
 
 # Startup the project
 
