@@ -38,12 +38,12 @@ def geo_query(distance,location):
     dist=f"{distance}km"
     geolocation=str(loc.latitude)+","+str(loc.longitude)+","+str(dist)
 
-    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en',tweet_mode='extended' ).items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q='*', geocode=geolocation,lang='en').items(n))
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -73,13 +73,13 @@ def handle_query(account):
     api = authenticate()
 
     handle = f"from:{account} -filter:retweets"
-    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en', tweet_mode='extended').items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 
@@ -91,13 +91,13 @@ def mention_query(account):
     api = authenticate()
 
     handle = f"@{account} -filter:retweets"
-    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en',tweet_mode='extended').items(n))
+    tweets = list(tweepy.Cursor(api.search_tweets, q=handle, lang='en').items(n))
 
     columns = ['Time', 'User', 'Tweet', 'Location']
     data = []
 
     for tweet in tweets:
-        data.append([tweet.created_at, tweet.user.screen_name, tweet.full_text, tweet.geo])
+        data.append([tweet.created_at, tweet.user.screen_name, tweet.text, tweet.geo])
 
     df = pd.DataFrame(data, columns=columns)
 

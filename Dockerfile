@@ -6,6 +6,7 @@ COPY setup.py /setup.py
 COPY credentials.json /credentials.json
 COPY config.ini /config.ini
 COPY baseline.pickle /baseline.pickle
+COPY improved_baseline.pickle /improved_baseline.pickle
 COPY .env /.env
 
 RUN pip install --upgrade pip
